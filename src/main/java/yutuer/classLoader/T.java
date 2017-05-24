@@ -1,4 +1,4 @@
-package greys.classLoader;
+package yutuer.classLoader;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -45,7 +45,6 @@ public class T {
 		Method method = cls.getDeclaredMethod("doSomeThing", null);
 		method.setAccessible(true);
 		method.invoke(obj);
-
 		
 	}
 }
