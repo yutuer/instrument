@@ -1,27 +1,31 @@
 package yutuer;
 
+import java.io.File;
 import java.lang.instrument.Instrumentation;
-
-import org.apache.log4j.Logger;
 
 import yutuer.transfer.PrintClassFileTransformer;
 
 public class AgentLaunch {
 
-	private static Logger log = Logger.getLogger(AgentLaunch.class);
-	
 	public static void premain(String args, Instrumentation inst) {
-        main(args, inst);
-        log.info(String.format("premain success, args:%s, inst:%s", args, inst));
-    }
-
-    public static void agentmain(String args, Instrumentation inst) {
-        main(args, inst);
-        log.info(String.format("agentmain success, args:%s, inst:%s", args, inst));
-    }
-
-	private static void main(String args, Instrumentation inst) {
 		inst.addTransformer(new PrintClassFileTransformer(), true);
+		System.out.println(String.format("premain success, args:%s, inst:%s", args, inst));
 	}
-    
+
+	public static void agentmain(String args, Instrumentation inst) {
+		String jarName = args;
+		String filePath = "dir" + "/" + jarName;
+		File f = new File(filePath);
+		System.out.println("filePath:" + filePath + ", exists:" + f.exists());
+
+		 for (Class<?> cls : inst.getAllLoadedClasses()) {
+			 System.out.println("LoadedClasses:" + cls.getName());
+		 }
+		
+		JarRedefineClass a = new JarRedefineClass(filePath, inst);
+		a.exec();
+		
+		System.out.println(String.format("agentmain success, args:%s, inst:%s", args, inst));
+	}
+
 }
