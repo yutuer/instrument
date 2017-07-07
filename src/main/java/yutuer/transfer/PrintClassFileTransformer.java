@@ -1,11 +1,10 @@
 package yutuer.transfer;
 
-import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.net.URL;
 import java.security.ProtectionDomain;
 
-public class PrintClassFileTransformer implements ClassFileTransformer{
+public class PrintClassFileTransformer implements MyClassFileTransformer{
 
 	@Override
 	public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
@@ -35,6 +34,11 @@ public class PrintClassFileTransformer implements ClassFileTransformer{
 //			e.printStackTrace();
 //		}
 		return null;
+	}
+
+	@Override
+	public boolean canRetransform() {
+		return true;
 	}
 	
 }
