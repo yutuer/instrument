@@ -30,6 +30,7 @@ public class JarRedefineClass {
 		try {
 			jarFile = new JarFile(jarName);
 			Enumeration<JarEntry> entries = jarFile.entries();
+			inst.appendToSystemClassLoaderSearch(jarFile);
 			while (entries.hasMoreElements()) {
 				JarEntry nextElement = entries.nextElement();
 				String name = nextElement.getName();
@@ -45,7 +46,6 @@ public class JarRedefineClass {
 						log.error("no care , it is only a tip!!!!");
 						log.error("clsName:" + clsName + " can't forName", e);
 						try {
-							inst.appendToSystemClassLoaderSearch(jarFile);
 							cls = ClassLoader.getSystemClassLoader().loadClass(clsName);
 						} catch (ClassNotFoundException e1) {
 							log.error("clsName:" + clsName + " can't ClassLoader.getSystemClassLoader().loadClass", e1);
