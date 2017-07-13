@@ -2,12 +2,12 @@ package yutuer.transfer;
 
 import java.lang.instrument.Instrumentation;
 
-public class InstWrapper {
+public class InstrumentationWrapper {
 
 	private final Instrumentation inst;
 	private final MyClassFileTransformer trans;
 
-	public InstWrapper(Instrumentation inst, MyClassFileTransformer trans) {
+	public InstrumentationWrapper(Instrumentation inst, MyClassFileTransformer trans) {
 		super();
 		this.inst = inst;
 		this.trans = trans;

@@ -13,9 +13,9 @@ import org.objectweb.asm.ClassWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class T {
+public class Jar_CL_Test {
 
-	private static Logger log = LoggerFactory.getLogger(T.class);
+	private static Logger log = LoggerFactory.getLogger(Jar_CL_Test.class);
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException,
@@ -39,8 +39,8 @@ public class T {
 		}
 		jarFile.close();
 
-		AgentClassLoader agentClassLoader = new AgentClassLoader(resource.getPath());
-		Class<?> cls = agentClassLoader.loadClass("springloaderTest.test.PreFix");
+		AgentJarClassLoader agentJarClassLoader = new AgentJarClassLoader(resource.getPath());
+		Class<?> cls = agentJarClassLoader.loadClass("springloaderTest.test.PreFix");
 		Object obj = cls.newInstance();
 		Method method = cls.getDeclaredMethod("doSomeThing", null);
 		method.setAccessible(true);

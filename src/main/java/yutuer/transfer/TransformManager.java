@@ -9,7 +9,7 @@ public class TransformManager {
 
 	private static final String ADD = "add";
 
-	private static final Map<String, InstWrapper> transforms = new HashMap<>();
+	private static final Map<String, InstrumentationWrapper> transforms = new HashMap<>();
 
 	public void parse(Instrumentation inst, String param) {
 		String[] transArr = param.split("&");
@@ -27,11 +27,11 @@ public class TransformManager {
 								.newInstance());
 						inst.addTransformer(transformer, transformer.canRetransform());
 						// 因为inst每次都不同,所以这里要将2个绑定起来存储, 以便删除
-						InstWrapper iw = new InstWrapper(inst, transformer);
+						InstrumentationWrapper iw = new InstrumentationWrapper(inst, transformer);
 						transforms.put(transformerName, iw);
 					}
 				} else {
-					InstWrapper iw = transforms.get(transformerName);
+					InstrumentationWrapper iw = transforms.get(transformerName);
 					if (iw != null) {
 						if (iw.getInst().removeTransformer(iw.getTrans())) {
 							transforms.remove(transformerName);

@@ -4,9 +4,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-public class AgentClassLoader extends URLClassLoader {
+public class AgentJarClassLoader extends URLClassLoader {
 
-	public AgentClassLoader(final String agentJar) throws MalformedURLException {
+	public AgentJarClassLoader(final String agentJar) throws MalformedURLException {
 		super(new URL[] { new URL("file:" + agentJar) });
 	}
 
