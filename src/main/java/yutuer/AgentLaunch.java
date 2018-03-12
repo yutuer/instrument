@@ -21,21 +21,23 @@ public class AgentLaunch {
 	public static void agentmain(String args, Instrumentation inst) {
 		String[] argArr = args.split(";");
 
-		String jarName = argArr[0];
-		String filePath = "dir" + "/" + jarName;
-		File f = new File(filePath);
-		System.out.println("filePath:" + filePath + ", exists:" + f.exists());
-
-		if (argArr.length > 1) {
-			transformManager.parse(inst, argArr[1]);
+		String transformers = argArr[0];
+		if (argArr.length > 0) {
+			transformManager.parse(inst, transformers);
 		}
 
-		for (Class<?> cls : inst.getAllLoadedClasses()) {
-			System.out.println("LoadedClasses:" + cls.getName());
-		}
+//		for (Class<?> cls : inst.getAllLoadedClasses()) {
+//			System.out.println("LoadedClasses:" + cls.getName());
+//		}
+		
+		if(argArr.length > 1){
+			String newCodeJar = "hotswap" + File.separator + argArr[1];
+			File f = new File(newCodeJar);
+			System.out.println("filePath:" + newCodeJar + ", exists:" + f.exists()); 
 
-		JarRedefineClass a = new JarRedefineClass(filePath, inst);
-		a.exec();
+			JarRedefineClass a = new JarRedefineClass(newCodeJar);
+			a.exec(inst);
+		}
 
 		System.out.println(String.format("agentmain success, args:%s, inst:%s", args, inst));
 	}

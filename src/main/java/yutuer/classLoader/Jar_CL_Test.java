@@ -17,9 +17,7 @@ public class Jar_CL_Test {
 
 	private static Logger log = LoggerFactory.getLogger(Jar_CL_Test.class);
 
-	public static void main(String[] args) throws ClassNotFoundException, IOException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException,
-			InstantiationException {
+	public static void main(String[] args) throws Exception {
 		// AgentClassLoader agentClassLoader = new
 		// AgentClassLoader("H:/GitHub/mini/target/dist/mysqlTunnel.excel-0.0.1-SNAPSHOT.jar");
 		// Class<?> loadClass =

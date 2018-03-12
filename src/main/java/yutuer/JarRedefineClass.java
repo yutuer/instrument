@@ -17,15 +17,13 @@ public class JarRedefineClass {
 	private static final Logger log = Logger.getLogger(JarRedefineClass.class);
 
 	private final String jarName;
-	private final Instrumentation inst;
 
-	public JarRedefineClass(String jarName, Instrumentation inst) {
+	public JarRedefineClass(String jarName) {
 		super();
 		this.jarName = jarName;
-		this.inst = inst;
 	}
 
-	public void exec() {
+	public void exec(Instrumentation inst) {
 		JarFile jarFile = null;
 		try {
 			jarFile = new JarFile(jarName);

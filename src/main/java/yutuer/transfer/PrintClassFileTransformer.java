@@ -6,11 +6,17 @@ import java.security.ProtectionDomain;
 
 public class PrintClassFileTransformer implements MyClassFileTransformer{
 
+	//在转换器使用 addTransformer 注册之后，每次定义新类和重定义类时都将调用该转换器。每次重转换类时还将调用可重转换转换器。
+	
+	//对新类定义的请求通过 ClassLoader.defineClass 或其本机等价方法进行。
+	//对类重定义的请求通过 Instrumentation.redefineClasses或其本机等价方法进行。 
+	//对类重转换的请求将通过 Instrumentation.retransformClasses 或其本机等价方法进行。
+	
 	@Override
 	public byte[] transform(ClassLoader loader, String className, Class<?> classBeingRedefined,
 			ProtectionDomain protectionDomain, byte[] classfileBuffer) throws IllegalClassFormatException {
-		System.out.println(String.format("loader:%s, className:%s, classBeingRedefined:%s, protectionDomain:%s, classfileBuffer:%s",
-				loader, className, classBeingRedefined, protectionDomain, classfileBuffer));
+		System.out.printf("now:%d, %s, loader:%s, className:%s, classBeingRedefined:%s, protectionDomain:%s, classfileBuffer:%s\n",
+				System.currentTimeMillis(), Thread.currentThread(), loader, className, classBeingRedefined, protectionDomain, classfileBuffer);
 		URL location = protectionDomain.getCodeSource().getLocation();
 		System.out.println("location path:" + location.getPath());
 		System.out.println("location file:" + location.getFile());
@@ -33,6 +39,8 @@ public class PrintClassFileTransformer implements MyClassFileTransformer{
 //		} catch (IOException e) {
 //			e.printStackTrace();
 //		}
+		
+		//一个格式良好的类文件缓冲区（转换的结果），如果未执行转换,则返回 null。 
 		return null;
 	}
 

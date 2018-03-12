@@ -22,7 +22,11 @@ public class AgentJarClassLoader extends URLClassLoader {
 			if (resolve) {
 				resolveClass(aClass);
 			}
-			return aClass;
+			
+			if(aClass != null){
+				return aClass;
+			}
+			return super.loadClass(name, resolve);
 		} catch (Exception e) {
 			return super.loadClass(name, resolve);
 		}
