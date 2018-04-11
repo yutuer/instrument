@@ -27,18 +27,18 @@ public class AgentLaunch {
 //		for (Class<?> cls : inst.getAllLoadedClasses()) {
 //			System.out.println("LoadedClasses:" + cls.getName());
 //		}
-
+		logger.info("args:" + args);	
 		if(args != null && args.length() > 0){
 			String[] argArr = args.split(";");
 			
 			if(argArr.length > 0){
-				String newCodeJar = "hotswap" + File.separator + argArr[0];
+				String newCodeJar = "agent" + File.separator + "hotswap" + File.separator + argArr[0];
 				File f = new File(newCodeJar);
 				logger.info("filePath:" + newCodeJar + ", exists:" + f.exists()); 
 				
 				JarRedefineClass a = new JarRedefineClass(newCodeJar);
-				a.exec(inst);
-				logger.info(String.format("JarRedefineClass success, args:%s, inst:%s", args, inst));
+				boolean isExec = a.exec(inst);
+				logger.info(String.format("JarRedefineClass run success, args:%s, inst:%s, execResult:%b", args, inst, isExec));
 			}
 
 			if (argArr.length > 1) {

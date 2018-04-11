@@ -20,6 +20,9 @@ public class VirtualMachineTest {
 		if(args.length > 0){
 			processName = args[0];
 		}		
+		//只取scene的
+		processName = "scene/" + processName;
+
 		VirtualMachineDescriptor descriptor = null;
 		for (VirtualMachineDescriptor virtualMachineDescriptor : VirtualMachine.list()) {
 			logger.info("virtualMachineDescriptor: displayName:{}, id:{}",  virtualMachineDescriptor.displayName(), virtualMachineDescriptor.id());
@@ -35,8 +38,8 @@ public class VirtualMachineTest {
 			logger.info("{}", systemProperties);
 			
 			String location = systemProperties.getProperty("user.dir") + File.separator  + "agent";
+			String jarName = "redefine.jar";
 			if(args.length > 1){
-				String jarName = "redefine.jar";
 				jarName = args[1];
 				if(args.length > 2){
 					location = args[2];

@@ -23,7 +23,7 @@ public class JarRedefineClass {
 		this.jarName = jarName;
 	}
 
-	public void exec(Instrumentation inst) {
+	public boolean exec(Instrumentation inst) {
 		JarFile jarFile = null;
 		try {
 			jarFile = new JarFile(jarName);
@@ -54,6 +54,7 @@ public class JarRedefineClass {
 						byte[] bytes = toBytes(inputStream);
 						try {
 							inst.redefineClasses(new ClassDefinition[] { new ClassDefinition(cls, bytes) });
+							return true;
 						} catch (ClassNotFoundException | UnmodifiableClassException e) {
 							log.error("redefineClasses error ", e);
 						}
@@ -71,6 +72,7 @@ public class JarRedefineClass {
 				}
 			}
 		}
+		return false;
 	}
 
 	public static byte[] toBytes(InputStream inputStream) throws IOException {
